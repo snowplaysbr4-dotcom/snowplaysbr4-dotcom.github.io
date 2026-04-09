@@ -1,10 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Macaco supremo</title>
+  <title>Gatinhos caóticos</title>
 </head>
-<body style="margin:0;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Golde33443.jpg" 
-       style="width:100vw; height:100vh; object-fit:cover;">
+<body style="margin:0; overflow:hidden; background:black;">
+
+<script>
+const cats = [];
+
+function createCat() {
+  const cat = document.createElement("img");
+  cat.src = "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif";
+  cat.style.position = "absolute";
+  cat.style.width = "80px";
+  
+  cat.x = Math.random() * window.innerWidth;
+  cat.y = Math.random() * window.innerHeight;
+  
+  cat.vx = (Math.random() - 0.5) * 6;
+  cat.vy = (Math.random() - 0.5) * 6;
+
+  cat.onclick = () => {
+    cat.remove(); // você “pegou” o gato 😼
+  };
+
+  document.body.appendChild(cat);
+  cats.push(cat);
+}
+
+function update() {
+  cats.forEach(cat => {
+    cat.x += cat.vx;
+    cat.y += cat.vy;
+
+    // quicar nas paredes
+    if (cat.x < 0 || cat.x > window.innerWidth - 80) cat.vx *= -1;
+    if (cat.y < 0 || cat.y > window.innerHeight - 80) cat.vy *= -1;
+
+    cat.style.left = cat.x + "px";
+    cat.style.top = cat.y + "px";
+  });
+
+  requestAnimationFrame(update);
+}
+
+// cria vários gatos
+for (let i = 0; i < 5; i++) {
+  createCat();
+}
+
+update();
+</script>
+
 </body>
 </html>
